@@ -1,0 +1,7 @@
+/terraform-provider-peernode
+/dist/
+*.tfstate*
+.terraform/
+.terraform.lock.hcl
+*.kubeconfig
+kubeconfig.yaml

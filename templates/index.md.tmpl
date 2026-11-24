@@ -1,0 +1,18 @@
+---
+page_title: "PeerNode Provider"
+description: |-
+  Manage Kubernetes clusters on PeerNode, a cloud built from provider-owned machines.
+---
+
+# PeerNode Provider
+
+[PeerNode](https://peernode.cloud) runs managed Kubernetes clusters (one vcluster per cluster) on
+machines that providers share with the platform. Tenant pods run in gVisor sandboxes; volumes are local
+to the workload with an asynchronous replica on another machine.
+
+Create an API token in the dashboard (Settings → API tokens) and pass it as `token` or in
+`PEERNODE_TOKEN`. Kubernetes is in preview: the account must be allowed to create clusters.
+
+{{ tffile "examples/provider/provider.tf" }}
+
+{{ .SchemaMarkdown | trimspace }}
