@@ -28,10 +28,11 @@ type fakeAPI struct {
 	issued   map[string]int // kubeconfigs issued per cluster
 	puts     int
 	seq      int
+	storage  *fakeStorage
 }
 
 func newFakeAPI() *fakeAPI {
-	return &fakeAPI{clusters: map[string]*client.Cluster{}, polls: map[string]int{}, issued: map[string]int{}}
+	return &fakeAPI{clusters: map[string]*client.Cluster{}, polls: map[string]int{}, issued: map[string]int{}, storage: newFakeStorage()}
 }
 
 func apiErr(w http.ResponseWriter, status int, code string) {
@@ -95,6 +96,10 @@ func (f *fakeAPI) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	if strings.HasPrefix(r.URL.Path, "/api/v1/buckets") || strings.HasPrefix(r.URL.Path, "/api/v1/s3") {
+		f.storage.serve(w, r)
+		return
+	}
 	rest := strings.TrimPrefix(r.URL.Path, "/api/v1/k8s/clusters")
 	parts := strings.Split(strings.Trim(rest, "/"), "/")
 	switch {

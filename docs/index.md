@@ -1,7 +1,7 @@
 ---
 page_title: "PeerNode Provider"
 description: |-
-  Manage Kubernetes clusters on PeerNode, a cloud built from provider-owned machines.
+  Manage Kubernetes clusters and storage buckets on PeerNode, a cloud built from provider-owned machines.
 ---
 
 # PeerNode Provider
@@ -9,6 +9,11 @@ description: |-
 [PeerNode](https://peernode.cloud) runs managed Kubernetes clusters (one vcluster per cluster) on
 machines that providers share with the platform. Tenant pods run in gVisor sandboxes; volumes are local
 to the workload with an asynchronous replica on another machine.
+
+Storage buckets are S3-compatible (`https://s3.peernode.cloud`, path-style, private or public) or end-to-end
+encrypted vaults. Files are encrypted and erasure-coded over at least two storage nodes. Create buckets and S3
+access keys here and manage objects with any S3 tool, or with the official AWS provider pointed at the PeerNode
+endpoint (see `peernode_storage_access_key`).
 
 Create an API token in the dashboard (Settings → API tokens) and pass it as `token` or in
 `PEERNODE_TOKEN`. Kubernetes is in preview: the account must be allowed to create clusters.

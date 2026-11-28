@@ -40,7 +40,7 @@ func (p *peernodeProvider) Metadata(_ context.Context, _ provider.MetadataReques
 
 func (p *peernodeProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Manage [PeerNode](https://peernode.cloud) resources: Kubernetes clusters and their kubeconfigs.",
+		MarkdownDescription: "Manage [PeerNode](https://peernode.cloud) resources: Kubernetes clusters and their kubeconfigs, storage buckets (S3-compatible or end-to-end encrypted vaults) and S3 access keys.",
 		Attributes: map[string]schema.Attribute{
 			"endpoint": schema.StringAttribute{
 				MarkdownDescription: "PeerNode API endpoint. Defaults to `$PEERNODE_ENDPOINT`, then `" + DefaultEndpoint + "`.",
@@ -83,7 +83,7 @@ func (p *peernodeProvider) Configure(ctx context.Context, req provider.Configure
 }
 
 func (p *peernodeProvider) Resources(context.Context) []func() resource.Resource {
-	return []func() resource.Resource{NewClusterResource, NewKubeconfigResource}
+	return []func() resource.Resource{NewClusterResource, NewKubeconfigResource, NewBucketResource, NewAccessKeyResource}
 }
 
 func (p *peernodeProvider) DataSources(context.Context) []func() datasource.DataSource {
